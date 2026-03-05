@@ -36,7 +36,7 @@ const userSchema = new Schema(
             required: true,
         },
         address: {
-            type: Array,
+            type: String,
             required: true,
             trim: true
         }
