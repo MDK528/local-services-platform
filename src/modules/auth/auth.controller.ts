@@ -4,7 +4,7 @@ import { signupService, signinService, signoutService, getmeService, refreshAcce
 
 const signUpController = async (req: Request, res: Response) => {
     const user = await signupService(req.body)
-    ApiResponse.ok(res, "User signed up successfully", user?.id)
+    ApiResponse.created(res, "User signed up successfully", user?.id)
 }
 
 const signInController = async (req: Request, res: Response) => {

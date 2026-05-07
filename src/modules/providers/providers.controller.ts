@@ -3,8 +3,6 @@ import { ApiResponse } from "../../common/utils/apiResponse.js"
 import { getAllProvidersService, providerProfileService, singleProviderService, updateProviderProfileService, availabilityToggleService, addservicesService, verifyProviderService } from "./providers.service.js"
 
 
-
-
 const getAllProvidersController = async (req:Request, res:Response) => {
     const providers = await getAllProvidersService()
 
