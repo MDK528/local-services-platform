@@ -1,7 +1,7 @@
 import { pgTable, uuid, varchar, boolean, timestamp, pgEnum } from 'drizzle-orm/pg-core'
 
 export const genderEnum = pgEnum('gender', ['male', 'female'])
-export const roleEnum = pgEnum('role', ['admin', 'customer', 'seller'])
+export const roleEnum = pgEnum('role', ['admin', 'customer', 'provider'])
 
 export const usersTable = pgTable('users', {
     

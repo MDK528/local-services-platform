@@ -2,7 +2,7 @@ import express from 'express'
 import type {Express} from 'express'
 import cookieParser from 'cookie-parser'
 import authRoute from './modules/auth/auth.route.js'
-
+import providerRoute from './modules/providers/providers.route.js'
 
 const app:Express = express()
 
@@ -12,5 +12,6 @@ app.use(cookieParser());
 
 
 app.use("/api/v1/auth", authRoute)
+app.use("/api/v1/providers", providerRoute)
 
 export default app 
