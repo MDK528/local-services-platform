@@ -9,6 +9,7 @@ import { generateAccessToken, generateRefreshToken, generateResetPasswordToken, 
 import type { ResetPassType, EmailType} from "./dto/resetpassword.dto.js";
 import crypto from "node:crypto"
 import { sendVerifcationEmail, sendResetPasswordEmail } from "../../common/config/mailConfig.js";
+import { providersTable } from "../providers/providers.model.js";
 
 const signupService = async ({firstName, lastName, email, phone, gender, role, address, avatarUrl, password}: SignupType)=>{
     const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email))
@@ -19,7 +20,7 @@ const signupService = async ({firstName, lastName, email, phone, gender, role, a
 
     const {rawToken, hashedToken} = generateResetPasswordToken()
 
-    const result = db.insert(usersTable).values({
+    const [result] = await db.insert(usersTable).values({
         firstName,
         lastName,
         email,
@@ -31,7 +32,10 @@ const signupService = async ({firstName, lastName, email, phone, gender, role, a
         password: hashPassword,
         emailVerificationToken: hashedToken
     }).returning({id: usersTable.id})
-    
+
+    if(role === 'provider'){
+       await db.insert(providersTable).values({providerId: result!.id})
+    }
 
     try {
         const mailResult = await sendVerifcationEmail(email, rawToken)

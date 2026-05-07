@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = async (to:string, subject:string, html:string ) => {
     await transporter.sendMail({
-        from: `tryOn <${process.env.SMTP_USER}>`,
+        from: `Urbidore <${process.env.SMTP_USER}>`,
         to,
         subject,
         html

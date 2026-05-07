@@ -7,7 +7,7 @@ import type { Request, Response, NextFunction } from "express";
 
 export type AuthUser = {
     id: string;
-    role: "admin" | "customer" | "seller";
+    role: "admin" | "customer" | "provider";
     email: string;
 }
 

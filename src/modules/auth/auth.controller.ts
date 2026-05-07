@@ -3,7 +3,7 @@ import { ApiResponse } from "../../common/utils/apiResponse.js"
 import { signupService, signinService, signoutService, getmeService, refreshAccessTokenService, forgotPasswordService, resetPasswordService, verifyEmailService } from './auth.service.js'
 
 const signUpController = async (req: Request, res: Response) => {
-    const [user] = await signupService(req.body)
+    const user = await signupService(req.body)
     ApiResponse.ok(res, "User signed up successfully", user?.id)
 }
 
