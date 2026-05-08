@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { createCategoriesController, getAllCategoriesController, getCategoriesByIdController, updateCategoriesController, deleteCategoriesController } from './categories.controller.js';
 import { authenticate, authorize } from "../auth/auth.middleware.js";
 import { validateParams } from '../../common/middleware/validate.middleware.js';
-import UUIDParams from './dto/uuidParams.dto.js';
+import UUIDParams from '../../common/dto/uuidParams.dto.js';
 
 const router:Router = Router()
 

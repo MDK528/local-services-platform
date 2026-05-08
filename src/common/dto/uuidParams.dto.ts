@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import BaseDto from '../../../common/dto/base.dto.js';
+import { z } from 'zod'
+import BaseDto from './base.dto.js'
 
 class UUIDParams extends BaseDto {
     static schema = z.object({
