@@ -13,5 +13,13 @@ const validate = (Dtoclass: BaseDtoType) => {
     }
 }
 
+const validateParams = (schema: BaseDtoType) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        const result = schema.validate(req.params)
+        if(result.error) throw ApiError.badRequest(result.error.map(e => e.message).join('; '))
+        next()
+    }
+}
 
-export default validate
+
+export { validate, validateParams }
