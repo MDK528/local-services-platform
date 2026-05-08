@@ -3,7 +3,6 @@ import { ApiError } from '../../common/utils/apiError.js'
 import { db } from '../../common/config/db.js'
 import { categoriesTable } from './categories.model.js'
 import type { CategoryType } from './dto/categories.dto.js'
-import type { UUIDParamsType } from './dto/uuidParams.dto.js'
 
 const createCategoriesService = async ({categoryName, categoryDescription}: CategoryType) => {
     const [category] = await db.insert(categoriesTable).values({categoryName, categoryDescription})
