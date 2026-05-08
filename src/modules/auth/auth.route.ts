@@ -1,4 +1,4 @@
-import validate from "../../common/middleware/validate.middleware.js";
+import {validate} from "../../common/middleware/validate.middleware.js";
 import Signup from "./dto/signup.dto.js";
 import { signInController, signOutController, signUpController, getMeController, refreshAccessTokenController, forgotPasswordController, resetPasswordController, verifyEmailController } from "./auth.controller.js";
 import { Router } from 'express'
