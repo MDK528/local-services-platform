@@ -20,7 +20,7 @@ const signInController = async (req: Request, res: Response) => {
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
-    ApiResponse.ok(res, "User signed in successfully", user.id)
+    ApiResponse.ok(res, "User signed in successfully", { id: user.id, accessToken })
 }
 
 const signOutController = async (req: Request, res: Response) => {
@@ -41,7 +41,8 @@ const getMeController = async (req: Request, res: Response) => {
                 gender:user.gender, 
                 phone:user.phone, 
                 address:user.address, 
-                avatar:user.avatarUrl
+                avatar:user.avatarUrl,
+                role: user.role
             }
     )
 }

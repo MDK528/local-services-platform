@@ -30,7 +30,7 @@ const createService = async ({categoryId, serviceName, serviceDescription, servi
 }
 const getAllServices = async () => {
 
-    const [services] = await db.select().from(serviceTable).leftJoin(categoriesTable, eq(categoriesTable.categoryId, serviceTable.categoryId))
+    const services = await db.select().from(serviceTable).leftJoin(categoriesTable, eq(categoriesTable.categoryId, serviceTable.categoryId))
     
     if(!services) throw ApiError.notfound("Service not found");
 
