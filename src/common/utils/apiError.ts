@@ -24,5 +24,8 @@ export class ApiError extends Error {
     static unprocessable(message = "unprocessable"){
         return new ApiError(422, message)
     }
-    
+
+    static internal(message = "Internal Server Error") {
+        return new ApiError(500, message);
+    }
 }

@@ -38,8 +38,6 @@ const getAllServices = async () => {
 }
 const getServiceById = async (serviceId: string) => {
 
-    if(!serviceId) throw ApiError.badRequest("Service Id is required");
-
     const [service] = await db.select().from(serviceTable)
                                         .leftJoin(categoriesTable, eq(categoriesTable.categoryId, serviceTable.categoryId))
                                         .where(eq(serviceTable.serviceId, serviceId))

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { db } from '../../common/config/db.js'
 import { providersTable } from './providers.model.js'
 import { usersTable } from '../auth/auth.model.js'
@@ -54,8 +54,6 @@ const providerProfileService = async (providerId: string) =>{
 }
 
 const singleProviderService = async (providerId: string) =>{ 
-    
-    if (!providerId.trim() || providerId === ':id') throw ApiError.badRequest("Provider id is required");
 
     const [provider] = await db.select({
                                     firstName: usersTable.firstName, 
@@ -111,14 +109,51 @@ const availabilityToggleService = async (providerId: string) => {
 const addservicesService = async (providerId: string, serviceId: string) => {
 
     if(!serviceId.trim()) throw ApiError.badRequest("Service id is required");
-    
-    const [providerService] = await db.insert(providerServiceTable).values({providerId, serviceId}).returning({providerId: providerServiceTable.providerId, serviceId: providerServiceTable.serviceId})
+     let providerService
+
+    try {
+        [providerService] = await db.insert(providerServiceTable).values({providerId, serviceId})
+                                                                        .returning({
+                                                                            providerId: providerServiceTable.providerId, 
+                                                                            serviceId: providerServiceTable.serviceId
+                                                                        })
+    } catch (error) {
+         throw ApiError.internal("Failed to add service")
+    }
 
     return providerService
 }
 
+const getProviderServicesService = async (providerId: string) => {
+
+    const [services] = await db.select({
+        serviceId: serviceTable.serviceId,
+        serviceName: serviceTable.serviceName,
+        servicePrice: serviceTable.servicePrice,
+        serviceDescription: serviceTable.serviceDescription,
+    }).from(providerServiceTable)
+      .innerJoin(serviceTable, eq(providerServiceTable.serviceId, serviceTable.serviceId))
+      .where(eq(providerServiceTable.providerId, providerId))
+
+    if(!services) throw ApiError.notfound("Services not found")
+    return services
+}
+
+const deleteProviderServiceService = async (providerId: string, serviceId: string) => {
+    const [deleted] = await db.delete(providerServiceTable)
+                              .where(and(
+                                eq(providerServiceTable.providerId, providerId),
+                                eq(providerServiceTable.serviceId, serviceId)
+                              ))
+                              .returning({ serviceId: providerServiceTable.serviceId })
+
+    if (!deleted) throw ApiError.notfound("Service not found")
+
+    return deleted
+}
+
+
 const verifyProviderService = async (providerID: string) =>{
-    if(!providerID.trim() || providerID === ':id') throw ApiError.badRequest("Provider id is required");
 
     const [verifiedProvider] = await db.update(providersTable).set({isVerified: true}).where(eq(providersTable.providerId, providerID)).returning({isVerified: providersTable.isVerified})
 
@@ -126,4 +161,4 @@ const verifyProviderService = async (providerID: string) =>{
 
 }
 
-export { getAllProvidersService, providerProfileService, singleProviderService, updateProviderProfileService, availabilityToggleService, addservicesService, verifyProviderService}
+export { getAllProvidersService, providerProfileService, singleProviderService, updateProviderProfileService, availabilityToggleService, addservicesService, getProviderServicesService, deleteProviderServiceService, verifyProviderService}

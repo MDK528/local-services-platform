@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
 import { ApiResponse } from "../../common/utils/apiResponse.js"
-import { getAllProvidersService, providerProfileService, singleProviderService, updateProviderProfileService, availabilityToggleService, addservicesService, verifyProviderService } from "./providers.service.js"
+import { getAllProvidersService, providerProfileService, singleProviderService, updateProviderProfileService, availabilityToggleService, addservicesService, verifyProviderService, getProviderServicesService, deleteProviderServiceService } from "./providers.service.js"
 
 
 const getAllProvidersController = async (req:Request, res:Response) => {
@@ -54,7 +54,7 @@ const availabilityToggleController = async (req:Request, res:Response) => {
 }
 
 const addservicesController = async (req:Request, res:Response) => {
-    
+
     const providerId = req.user.id
     const { serviceId } = req.body
 
@@ -62,10 +62,25 @@ const addservicesController = async (req:Request, res:Response) => {
 
     ApiResponse.ok(res, "Service added successfully", result)
 }
+
+const getProviderServicesController = async (req: Request, res: Response) => {
+    const  providerId  = String(req.params.id)
+    const services = await getProviderServicesService(providerId)
+
+    ApiResponse.ok(res, "Provider services fetched successfully", services)
+}
+
+const deleteProviderServiceController = async (req: Request, res: Response) => {
+    const  serviceId  = String(req.params.id)
+    const deleted = await deleteProviderServiceService(req.user.id, serviceId)
+
+    ApiResponse.ok(res, "Service removed successfully", deleted)
+}
+
 const verifyProviderController = async (req:Request, res:Response) => {
     const providerId = req.params.id 
     const verifiedProvider = await verifyProviderService(String(providerId))
 
     ApiResponse.ok(res, "Provider Verification successful", verifiedProvider)
 }
-export { getAllProvidersController, getProviderProfileController, singleProviderController, updateProviderProfileController, availabilityToggleController, addservicesController, verifyProviderController }
+export { getAllProvidersController, getProviderProfileController, singleProviderController, updateProviderProfileController, availabilityToggleController, addservicesController, getProviderServicesController, deleteProviderServiceController, verifyProviderController }
