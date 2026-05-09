@@ -8,6 +8,13 @@
       "when": 1777399471668,
       "tag": "0000_vengeful_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778274762469,
+      "tag": "0001_amusing_marvel_boy",
+      "breakpoints": true
     }
   ]
 }
