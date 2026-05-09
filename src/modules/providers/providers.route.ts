@@ -8,7 +8,7 @@ const router:Router = Router()
 
 router.get('/', getAllProvidersController)
 router.get('/me', authenticate, authorize('provider'), getProviderProfileController)
-router.get('/:id', authenticate, validateParams(UUIDParams), singleProviderController)
+router.get('/:id', validateParams(UUIDParams), singleProviderController)
 router.patch('/me', authenticate, authorize('provider'), updateProviderProfileController)
 router.patch('/me/availabiltiy', authenticate, authorize('provider'), availabilityToggleController)
 router.post('/me/services', authenticate, authorize('provider'), addservicesController)
