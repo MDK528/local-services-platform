@@ -8,11 +8,11 @@ export const statusEnum = pgEnum('booking_status', ["requested", "confirmed", "i
 export const bookingTable = pgTable('bookings', {
     bookingId: uuid('booking_id').primaryKey().defaultRandom(),
     providerId: uuid('provider_id').references(()=> providersTable.providerId),
-    userId: uuid('user_id').references(()=> usersTable.id),
+    customerId: uuid('customer_id').references(()=> usersTable.id),
     serviceId: uuid('service_id').references(()=> serviceTable.serviceId),
     scheduledAt: timestamp('scheduled_at').notNull(),
     bookingPrice: decimal('booking_price', {precision: 10, scale: 2}),
-    status: statusEnum('booking_status'),
+    status: statusEnum('booking_status').default('requested'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').$onUpdate(() => new Date()),
 
