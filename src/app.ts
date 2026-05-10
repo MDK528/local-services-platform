@@ -1,6 +1,8 @@
 import express from 'express'
-import type {Express} from 'express'
+import type { Express } from 'express'
 import cookieParser from 'cookie-parser'
+import cors from "cors";
+
 import authRoute from './modules/auth/auth.route.js'
 import providerRoute from './modules/providers/providers.route.js'
 import categoryRoute from './modules/categories/categories.route.js'
@@ -11,6 +13,10 @@ import adminRoute from './modules/admin/admin.route.js'
 
 const app:Express = express()
 
+app.use(cors({
+    origin: ["http://localhost:5173", process.env.CORS_ORIGIN!],
+    credentials: true
+}));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
