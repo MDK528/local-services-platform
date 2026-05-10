@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express'
 import { ApiResponse } from "../../common/utils/apiResponse.js"
-import { signupService, signinService, signoutService, getmeService, refreshAccessTokenService, forgotPasswordService, resetPasswordService, verifyEmailService } from './auth.service.js'
+import { signupService, signinService, signoutService, getmeService, refreshAccessTokenService, forgotPasswordService, resetPasswordService, verifyEmailService, updateUserService } from './auth.service.js'
 
 const signUpController = async (req: Request, res: Response) => {
     const user = await signupService(req.body)
@@ -83,4 +83,11 @@ const verifyEmailController = async (req: Request, res: Response) => {
     ApiResponse.ok(res, "Email verification successfull", {id: updatedUser?.id, status: updatedUser?.isVerified})
 }
 
-export { signUpController, signInController, signOutController, getMeController, refreshAccessTokenController, forgotPasswordController, resetPasswordController, verifyEmailController }
+
+const updateUserController = async (req: Request, res: Response) => {
+    const updatedUser = await updateUserService(req.user.id, req.body)
+    
+    ApiResponse.ok(res, "User updated successfully", updatedUser)
+}
+
+export { signUpController, signInController, signOutController, getMeController, refreshAccessTokenController, forgotPasswordController, resetPasswordController, verifyEmailController, updateUserController }

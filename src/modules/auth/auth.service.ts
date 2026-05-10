@@ -10,6 +10,7 @@ import type { ResetPassType, EmailType} from "./dto/resetpassword.dto.js";
 import crypto from "node:crypto"
 import { sendVerifcationEmail, sendResetPasswordEmail } from "../../common/config/mailConfig.js";
 import { providersTable } from "../providers/providers.model.js";
+import type { UpdateUserType } from "./dto/updateUser.dto.js";
 
 const signupService = async ({firstName, lastName, email, phone, gender, role, address, avatarUrl, password}: SignupType)=>{
     const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email))
@@ -156,4 +157,37 @@ const verifyEmailService = async (token: string) =>{
     return { updatedUser }
 }
 
-export {signupService, signinService, signoutService, getmeService, refreshAccessTokenService, forgotPasswordService, resetPasswordService, verifyEmailService}
+const updateUserService = async (userId: string, updates: UpdateUserType) => {
+    const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.id, userId))
+
+    if (!existingUser?.id) throw ApiError.notfound("User not found")
+
+    if (updates.phone) {
+        const [phoneConflict] = await db
+            .select()
+            .from(usersTable)
+            .where(eq(usersTable.phone, updates.phone))
+
+        if (phoneConflict && phoneConflict.id !== userId) {
+            throw ApiError.conflict("Phone number already in use")
+        }
+    }
+
+    const [updatedUser] = await db
+        .update(usersTable)
+        .set(updates)
+        .where(eq(usersTable.id, userId))
+        .returning({
+            id:        usersTable.id,
+            firstName: usersTable.firstName,
+            lastName:  usersTable.lastName,
+            phone:     usersTable.phone,
+            gender:    usersTable.gender,
+            address:   usersTable.address,
+            avatarUrl: usersTable.avatarUrl,
+        })
+
+    return updatedUser
+}
+
+export {signupService, signinService, signoutService, getmeService, refreshAccessTokenService, forgotPasswordService, resetPasswordService, verifyEmailService, updateUserService}

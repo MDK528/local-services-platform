@@ -1,9 +1,10 @@
 import {validate} from "../../common/middleware/validate.middleware.js";
 import Signup from "./dto/signup.dto.js";
-import { signInController, signOutController, signUpController, getMeController, refreshAccessTokenController, forgotPasswordController, resetPasswordController, verifyEmailController } from "./auth.controller.js";
+import { signInController, signOutController, signUpController, getMeController, refreshAccessTokenController, forgotPasswordController, resetPasswordController, verifyEmailController, updateUserController } from "./auth.controller.js";
 import { Router } from 'express'
 import Signin from "./dto/signin.dto.js";
 import { authenticate } from "./auth.middleware.js";
+import UpdateUser from "./dto/updateUser.dto.js";
 
 
 const router:Router = Router()
@@ -16,5 +17,6 @@ router.post("/refresh-accesstoken", refreshAccessTokenController)
 router.post("/forgot-password", forgotPasswordController)
 router.patch("/reset-password", resetPasswordController)
 router.patch("/verify-email", verifyEmailController)
+router.patch("/update-me", authenticate, validate(UpdateUser), updateUserController)
 
 export default router
