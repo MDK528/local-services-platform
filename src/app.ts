@@ -7,6 +7,7 @@ import categoryRoute from './modules/categories/categories.route.js'
 import serviceRoute from './modules/services/services.route.js'
 import bookingRoute from './modules/bookings/booking.route.js'
 import reviewsRoute from './modules/reviews/reviews.route.js'
+import adminRoute from './modules/admin/admin.route.js'
 
 const app:Express = express()
 
@@ -21,5 +22,6 @@ app.use("/api/v1/categories", categoryRoute)
 app.use("/api/v1/services", serviceRoute)
 app.use("/api/v1/bookings", bookingRoute)
 app.use("/api/v1/reviews", reviewsRoute)
+app.use("/api/v1/admin", adminRoute)
 
 export default app 
