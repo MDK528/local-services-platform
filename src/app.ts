@@ -21,7 +21,12 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
 
-
+app.get("/uptime", (_, res) => {
+    res.status(200).json({
+        message: "ok",
+        success: true
+    })
+})
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/providers", providerRoute)
 app.use("/api/v1/categories", categoryRoute)
