@@ -28,8 +28,7 @@ const sendVerifcationEmail = async (email: string,token: string) => {
     <h2>Welcome!</h2>
 
       <p>
-        Please verify your email using
-        the code below:
+        Please verify your email address by clicking the button below.
       </p>
 
       <a
@@ -72,7 +71,7 @@ const sendResetPasswordEmail = async (
 
       <p>
         We got a request to reset
-        your password.
+        your password. Click the button below to reset your password.
       </p>
 
       <a
@@ -88,10 +87,6 @@ const sendResetPasswordEmail = async (
     >
       Reset Password
     </a>
-
-      <p>
-        This code expires in 10 minutes.
-      </p>
 
       <p>
         If you didn't request this,
