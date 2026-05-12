@@ -13,10 +13,12 @@ const signInController = async (req: Request, res: Response) => {
     res.cookie("accessToken", accessToken,{
         httpOnly: true,
         secure: true,
+        sameSite: "none",
         maxAge: 15 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
+        sameSite: "none",
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
@@ -26,6 +28,7 @@ const signInController = async (req: Request, res: Response) => {
 const signOutController = async (req: Request, res: Response) => {
     await signoutService(req.user.id)
     res.clearCookie("accessToken")
+    res.clearCookie("refreshToken")
     ApiResponse.ok(res, "User signed out successfully")
 }
 
@@ -53,10 +56,12 @@ const refreshAccessTokenController = async (req: Request, res: Response) => {
     res.cookie("accessToken", accessToken,{
         httpOnly: true,
         secure: true,
+        sameSite: "none",
         maxAge: 15 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
+        sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000
     })
 
