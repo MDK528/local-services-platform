@@ -7,9 +7,6 @@ import { bookingTable } from '../bookings/booking.model.js'
 import { providersTable } from '../providers/providers.model.js'
 import type { CreateCategoryDtoType, UpdateCategoryDtoType, CreateServiceDtoType, UpdateServiceDtoType } from './dto/admin.dto.js'
 
-// ---------------------------------------------------------------------------
-// Categories
-// ---------------------------------------------------------------------------
 
 const getAllCategoriesService = async () => {
     const categories = await db.select().from(categoriesTable)
@@ -50,9 +47,6 @@ const deleteCategoryService = async (categoryId: string) => {
     await db.delete(categoriesTable).where(eq(categoriesTable.categoryId, categoryId))
 }
 
-// ---------------------------------------------------------------------------
-// Services
-// ---------------------------------------------------------------------------
 
 const getAllServicesService = async () => {
     const services = await db.select().from(serviceTable)
@@ -102,9 +96,6 @@ const deleteServiceService = async (serviceId: string) => {
     await db.delete(serviceTable).where(eq(serviceTable.serviceId, serviceId))
 }
 
-// ---------------------------------------------------------------------------
-// Bookings
-// ---------------------------------------------------------------------------
 
 const getAllBookingsService = async () => {
     const bookings = await db.select().from(bookingTable)
@@ -131,9 +122,6 @@ const forceCancelBookingService = async (bookingId: string) => {
     return updated
 }
 
-// ---------------------------------------------------------------------------
-// Providers
-// ---------------------------------------------------------------------------
 
 const verifyProviderService = async (providerId: string) => {
     const [provider] = await db.select({ isVerified: providersTable.isVerified })

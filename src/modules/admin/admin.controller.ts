@@ -7,9 +7,6 @@ import {
     verifyProviderService,
 } from './admin.service.js'
 
-// ---------------------------------------------------------------------------
-// Categories
-// ---------------------------------------------------------------------------
 
 const getAllCategoriesController = async (req: Request, res: Response) => {
     const categories = await getAllCategoriesService()
@@ -31,9 +28,6 @@ const deleteCategoryController = async (req: Request, res: Response) => {
     ApiResponse.noContent(res)
 }
 
-// ---------------------------------------------------------------------------
-// Services
-// ---------------------------------------------------------------------------
 
 const getAllServicesController = async (req: Request, res: Response) => {
     const services = await getAllServicesService()
@@ -55,9 +49,6 @@ const deleteServiceController = async (req: Request, res: Response) => {
     ApiResponse.noContent(res)
 }
 
-// ---------------------------------------------------------------------------
-// Bookings
-// ---------------------------------------------------------------------------
 
 const getAllBookingsController = async (req: Request, res: Response) => {
     const bookings = await getAllBookingsService()
@@ -68,10 +59,6 @@ const forceCancelBookingController = async (req: Request, res: Response) => {
     const status = await forceCancelBookingService(String(req.params.id))
     ApiResponse.ok(res, 'Booking cancelled successfully', status)
 }
-
-// ---------------------------------------------------------------------------
-// Providers
-// ---------------------------------------------------------------------------
 
 const verifyProviderController = async (req: Request, res: Response) => {
     const provider = await verifyProviderService(String(req.params.id))

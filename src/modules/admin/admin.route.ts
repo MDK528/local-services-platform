@@ -12,26 +12,18 @@ import {
 
 const router: Router = Router()
 
-// all admin routes protected
-router.use(authenticate, authorize('admin'))
 
-// Categories
+router.use(authenticate, authorize('admin'))
 router.get('/categories', getAllCategoriesController)
 router.post('/categories', validate(CreateCategoryDto), createCategoryController)
 router.patch('/categories/:id', validateParams(UUIDParams), validate(UpdateCategoryDto), updateCategoryController)
 router.delete('/categories/:id', validateParams(UUIDParams), deleteCategoryController)
-
-// Services
 router.get('/services', getAllServicesController)
 router.post('/services', validate(CreateServiceDto), createServiceController)
 router.patch('/services/:id', validateParams(UUIDParams), validate(UpdateServiceDto), updateServiceController)
 router.delete('/services/:id', validateParams(UUIDParams), deleteServiceController)
-
-// Bookings
 router.get('/bookings', getAllBookingsController)
 router.patch('/bookings/:id/cancel', validateParams(UUIDParams), forceCancelBookingController)
-
-// Providers
 router.patch('/providers/:id/verify', validateParams(UUIDParams), verifyProviderController)
 
 export default router
