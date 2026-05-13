@@ -65,7 +65,7 @@ const refreshAccessTokenController = async (req: Request, res: Response) => {
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
-    ApiResponse.ok(res, "Tokens are refreshed", accessToken)
+    ApiResponse.ok(res, "Tokens are refreshed", { accessToken })
 }
 
 const forgotPasswordController = async (req: Request, res: Response) => {
