@@ -14,7 +14,7 @@ const signInController = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 15 * 60 * 1000
+        maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
@@ -57,12 +57,12 @@ const refreshAccessTokenController = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 15 * 60 * 1000
+        maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
     ApiResponse.ok(res, "Tokens are refreshed", accessToken)
