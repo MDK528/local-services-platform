@@ -14,11 +14,13 @@ const signInController = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: '.mdkhalid.site',
         maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: '.mdkhalid.site',
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
@@ -57,11 +59,13 @@ const refreshAccessTokenController = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: '.mdkhalid.site',
         maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        domain: '.mdkhalid.site',
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
