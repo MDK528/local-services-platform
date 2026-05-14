@@ -13,12 +13,12 @@ const signInController = async (req: Request, res: Response) => {
     res.cookie("accessToken", accessToken,{
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "lax",
         maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "lax",
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
@@ -56,12 +56,12 @@ const refreshAccessTokenController = async (req: Request, res: Response) => {
     res.cookie("accessToken", accessToken,{
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "lax",
         maxAge: 30 * 60 * 1000
     }).cookie("refreshToken", refreshToken,{
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "lax",
         maxAge: 5 * 24 * 60 * 60 * 1000
     })
 
