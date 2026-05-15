@@ -1,5 +1,5 @@
 import express from 'express'
-import type { Express } from 'express'
+import type { Express, Request, Response, NextFunction } from 'express'
 import cookieParser from 'cookie-parser'
 import cors from "cors";
 
@@ -10,6 +10,7 @@ import serviceRoute from './modules/services/services.route.js'
 import bookingRoute from './modules/bookings/booking.route.js'
 import reviewsRoute from './modules/reviews/reviews.route.js'
 import adminRoute from './modules/admin/admin.route.js'
+import { ApiError } from './common/utils/apiError.js';
 
 const app:Express = express()
 
@@ -34,5 +35,20 @@ app.use("/api/v1/services", serviceRoute)
 app.use("/api/v1/bookings", bookingRoute)
 app.use("/api/v1/reviews", reviewsRoute)
 app.use("/api/v1/admin", adminRoute)
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) =>{
+     if (err instanceof ApiError) {
+        res.status(err.statusCode).json({
+            success: false,
+            message: err.message
+        })
+        return
+    }
+
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error'
+    })
+})
 
 export default app 
