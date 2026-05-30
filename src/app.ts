@@ -11,6 +11,8 @@ import bookingRoute from './modules/bookings/booking.route.js'
 import reviewsRoute from './modules/reviews/reviews.route.js'
 import adminRoute from './modules/admin/admin.route.js'
 import { ApiError } from './common/utils/apiError.js';
+import { db } from './common/config/db.js';
+import { sql } from 'drizzle-orm';
 
 const app:Express = express()
 
@@ -22,11 +24,21 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
 
-app.get("/uptime", (_, res) => {
-    res.status(200).json({
-        message: "ok",
-        success: true
-    })
+app.get("/uptime", async(_, res: Response) => {
+    
+    try {
+        await db.execute(sql`SELECT 1`)
+
+        res.status(200).json({
+            success: true,
+            message: "ok"
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: error  
+        });
+    }
 })
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/providers", providerRoute)
