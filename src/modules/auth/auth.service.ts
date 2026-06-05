@@ -152,6 +152,7 @@ const verifyEmailService = async (token: string) =>{
 
     const [updatedUser] = await db.update(usersTable)
                                         .set({isEmailVerified: true, emailVerificationToken: null})
+                                        .where(eq(usersTable.id, user.id))
                                         .returning({id: usersTable.id, isVerified: usersTable.isEmailVerified})
 
     return { updatedUser }
